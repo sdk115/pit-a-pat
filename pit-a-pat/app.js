@@ -1,15 +1,12 @@
 const PORT = 3000;
 
 var express = require('express');
-
-
 var index = require('./routes/index');
 var users = require('./routes/users');
-
 var app = express();
 
 // view engine setup
-app.set('views', './views');
+app.set('views', '../views');
 app.set('view engine', 'jade');
 
 app.use(express.static('public'));
@@ -34,6 +31,5 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
-
 
 module.exports = app;
