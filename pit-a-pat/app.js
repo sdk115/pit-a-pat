@@ -1,17 +1,23 @@
-const PORT = 3000;
-
 var express = require('express');
 var index = require('./routes/index');
+var login = require('./routes/login');
+var score = require('./routes/score');
+
 var users = require('./routes/users');
 var app = express();
+var path = require('path');
 
 // view engine setup
-app.set('views', '../views');
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(express.static('public'));
+app.use(express.static( path.join(__dirname, 'public') ));
 
 app.use('/', index);
+app.use('/', login);
+app.use('/', score);
+
+
 
 app.use('/users', users);
 // catch 404 and forward to error handler

@@ -1,5 +1,21 @@
 extends layout
 
-block content
-    h1= title
-    p Welcome to #{title}
+block Head
+    +CSS('index')
+
+block Body
+    .container
+        .jumbotron
+            .row
+                .col-md-4
+                    img(src="/images/character.png")#main-img
+                .col-md-8
+                    h1= 'PIT-A-PAT'
+                    br
+                    .sub-discription.letter
+                        label= "PIT-A-PAT은 순천향대 빅데이터공학과 학생들을 위한 성적 조회 시스템입니다. "
+                        label= " 중간, 기말, 과제 점수를 쉽고 빠르게 확인 가능합니다. "
+                        label= " 교수님과 약속된 아이디와 패스워드로 로그인 하세요."
+
+                    br
+                    a.btn.btn-lg.btn-danger.pull-right.btn-go(href='/login', role='button')= ">> " + "조회하기"

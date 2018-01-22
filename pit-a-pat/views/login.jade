@@ -1,0 +1,24 @@
+extends layout
+
+
+block Head
+    +CSS('login')
+
+block Body
+    .container
+        .card.card-container
+            // <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" />
+            img#profile-img.profile-img-card(src='//ssl.gstatic.com/accounts/ui/avatar_2x.png')
+            p#profile-name.profile-name-card
+            form.form-signin(action='/score', method='post', enctype='application/x-www-form-urlencoded')
+                span#reauth-email.reauth-email
+                input#inputEmail.form-control(type='id', placeholder='아이디 / 학번', required='', autofocus='', name="id")
+                input#inputPassword.form-control(type='password', placeholder='패스워드', required='', name="password")
+                select.input-large.form-control(name="subject")
+                    - for d in data
+                        option(value= d) #{d}
+
+                label
+                button.btn.btn-lg.btn-primary.btn-block.btn-signin(type='submit') 로그인
+            // /form
+
