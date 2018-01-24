@@ -1,30 +1,84 @@
 var express = require('express');
 var router = express.Router();
 
-var fs = require('fs');
-var parse = require('csv-parse');
-var async = require('async');
 
-var inputFile='../private/score/컴퓨터학개론.csv';
+function readCSV(fileName, callback){
+    var fs = require('fs');
+    var parse = require('csv-parse');
+    const privatePath='../private/score/';
+    const finalPath = privatePath+fileName+".csv"
 
-var parser = parse({delimiter: ','}, function (err, data) {
-    async.eachSeries(data, function (line, callback) {
-        // do something with the line
-        // doSomething(line).then(function() {
-        //     // when processing finishes invoke the callback to move to the next one
-        //     callback();
-        // });
-        console.log(line)
-    })
-});
-fs.createReadStream(inputFile).pipe(parser);
+    var csvData=[];
+    fs.createReadStream(finalPath)
+        .pipe(parse({delimiter: ','}))
+        .on('data', function(csvrow) {
+            csvData.push(csvrow);
+        })
+        .on('end',function() {
+            // split header, calc sum, sort
+            var title = csvData[0]
+            var scores = csvData.slice(1)
+
+            callback(title,scores)
+        });
+}
+
+function searchScore(id, pwd, scores){
+    for(i in scores){
+        console.log(scores[i][0]+"!"+id+pwd)
+        if( scores[i][0] == id && scores[i][1] == pwd){
+            return scores[i]
+        }
+    }
+    return null
+}
+
+function getScoreByTitle(titles, scores, title){
+    var title_index = -1;
+    var ret = []
+
+    for(var i in titles){
+        if(titles[i] == title){
+            title_index =  i;
+            break;
+        }
+    }
+
+    if(title_index == -1) return null;
+    for(var i in scores){
+        ret.push(parseFloat(scores[i][title_index]));
+    }
+
+    ret.sort();
+    return ret;
+}
 
 var bodyParser = require('body-parser')
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.post('/score',urlencodedParser, function (req, res, next) {
     console.log(req.body)
-    res.render('score');
+    readCSV(req.body['subject'], function(titles, scores){
+
+        var myScore = searchScore(req.body['id'], req.body['password'], scores)
+
+        //reponse score data
+        if(myScore == null)
+        {
+            res.render('score', {myScore: null, midScore:null, finalScore:null});
+        }
+        else
+        {
+            var midScores = getScoreByTitle(titles,scores,"중간고사")
+            var finalScores = getScoreByTitle(titles,scores,"기말고사")
+
+            myScore = myScore.slice(3)
+            titles = titles.slice(3)
+            console.log(midScores)
+
+            res.render('score', {title:titles, myScore: myScore,  midScores:midScores, finalScores:finalScores});
+        }
+    });
 });
 
 module.exports = router;

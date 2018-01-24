@@ -1,23 +1,25 @@
 var express = require('express');
 var router = express.Router();
-var bodyParser = require('body-parser');
-var jsonParser = bodyParser.json()
-var urlencodedParser = bodyParser.urlencoded({extended:false})
 /* GET home page. */
 
-function getFileNames() {
-    const  scoreFolder = '../private/score';
+function getFileNames(scoreFolder, callback) {
     const fs = require('fs');
 
-    names = fs.readdirSync(scoreFolder)
-    for (i in names){
-        names[i] = names[i].replace(/\.[^/.]+$/, "")
-    }
-    return names
+    fs.readdir(scoreFolder, (err, files) => {
+        callback(files)
+    })
 }
 
 router.get('/login', function (req, res, next) {
-    res.render('login', {data: getFileNames()});
+    const scoreFolder = '../private/score';
+
+    getFileNames(scoreFolder, function(files){
+        for (i in files){
+            // 확장자 제거
+            files[i] = files[i].replace(/\.[^/.]+$/, "")
+        }
+        res.render('login', {data: files})
+    });
 });
 
 module.exports = router;

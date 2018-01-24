@@ -1,5 +1,52 @@
 extends layout
 
+block Head
+    +CSS('error')
+    +CSS('score')
+    script(type="text/javascript" src="https://www.gstatic.com/charts/loader.js")
+    script(src="https://cdn.plot.ly/plotly-latest.min.js")
+    +JS("draw_histogram")
+
+
+
+
 block Body
     .container
+        #chart_div
+        if (myScore == null)
+            .error-box
+                img(src="/images/error.png")#error-img
+                h3.error-msg= "조회된 성적이 없습니다."
+                a.error-msg(href="/login")
+                    h4= "뒤로가기"
+        else
+            .score-box
+                h3.score-title= "나의 성적"
+                table.table.table-bordered
+                    thead
+                        tr
+                            for t in title
+                                th= t
+                    tbody
+                        tr
+                            for s in myScore
+                                td= s
+            if (midScores != null)
+                .score-box
+                    h3.score-title= "중간고사 성적 분포"
+                    #mid-histogram-box
+                    script.
+                        drawHistogram("mid-histogram-box", [#{midScores}])
+
+            if (finalScores != null)
+                .score-box
+                    h3.score-title= "기말고사 성적 분포"
+                    #final-histogram-box
+                    script.
+                        drawHistogram("final-histogram-box", [#{finalScores}])
+
+            script.
+
+
+
 

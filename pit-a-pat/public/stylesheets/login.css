@@ -8,12 +8,10 @@ body, html {
     height: 100%;
     /*background : #404040;*/
     /*background-image: linear-gradient(DimGrey , DimGrey );*/
-
 }
 
 .card-container.card {
     max-width: 400px;
-    padding: 40px 40px;
 }
 
 .container{
