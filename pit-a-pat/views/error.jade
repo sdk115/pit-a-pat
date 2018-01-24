@@ -1,6 +1,14 @@
 extends layout
 
-block content
-    h1= message
-    h2= error.status
-    //pre #{error.stack}
+block Head
+    +CSS('error')
+block Body
+    .container
+            .error-box
+                img(src="/images/error.png")#error-img
+                h3.error-msg= "예기치 않은 서버 오류가 발생했습니다"
+                a.error-msg(href="/")
+                    h4= "뒤로가기"
+        //pre #{error.stack}
+        //h1= message
+

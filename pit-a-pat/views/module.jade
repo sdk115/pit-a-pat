@@ -1,0 +1,11 @@
+
+mixin CSS(id)
+    link(rel='stylesheet', href=`/stylesheets/${id}.css`)
+mixin JS(id)
+    script(type='text/javascript', src=`/javascripts/${id}.js`)
+
+script.
+    function L(key){
+        return key
+    }
+

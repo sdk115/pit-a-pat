@@ -1,7 +1,23 @@
+include ./module
+
 doctype html
 html
     head
-        title= title
-        link(rel='stylesheet', href='/stylesheets/style.css')
+        title= "PIT-A-PAT"
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1.0')
+        meta(name='description', content='')
+        meta(name='author', content='')
+        include ./partials/scripts
+            block Head
+
+        link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', rel='stylesheet')
+        //- language
+        //- in-page script
+        +JS('global')
+
+        //- additional
+        block Header
     body
-        block content
+        include partials/menubar
+        block Body

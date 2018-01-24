@@ -1,0 +1,22 @@
+
+#error-img{
+    display: block;
+    height: auto;
+    max-width: 100%;
+    margin:0 auto;
+
+    margin-top:3rem;
+    margin-bottom:3rem;
+
+}
+.error-msg{
+    text-align: center;
+}
+.error-box{
+    /*padding:1rem;*/
+    /*border: 3px solid black;*/
+    /*display: block;*/
+    /*height: auto;*/
+    /*max-width: 50%;*/
+    /*margin:0 auto;*/
+}
