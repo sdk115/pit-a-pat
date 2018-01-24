@@ -53,6 +53,34 @@ function getScoreByTitle(titles, scores, title){
     return ret;
 }
 
+function changeHistogramData(scores){
+    var max_value = Math.max(scores)
+    var min_value = Math.min(scores)
+
+    var ret = []
+    var boundaries = []
+    var buck_count = 10
+    var stride = (max_value + min_value) / 10
+    var now = min_value
+
+    while (true){
+        boundaries.push(now)
+        ret.push(0)
+        if(now > max_value) break
+        now += stride
+    }
+
+    for (var i in scores){
+        for (var j = 0; j < boundaries.length+1; j++){
+
+        }
+
+    }
+
+
+    return ret
+}
+
 var bodyParser = require('body-parser')
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
